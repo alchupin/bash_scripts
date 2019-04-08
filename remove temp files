@@ -1,21 +1,21 @@
 #!/bin/bash
 
-TEMP_DIR=/usr/share/tomcat/temp/
-DEST_DIR=/opt/
+TEMP_DIR=/usr/share/tomcat/temp
+DEST_DIR=/opt
 TODAY=`date '+log-%Y-%m-%d-%H-%M.log'`
 
 # Stop tomcat
 sudo systemctl stop tomcat
 
 # Number of temp files and there size
-NUMBER_OF_FILES=`find $TEMP_DIR -maxdepth 1 -type f | wc -l'`
-FILE_SIZE=`du -sh $TEMP_DIR | awk '{print $1}'`
+NUMBER_OF_FILES=`ls -f $TEMP_DIR/ | wc -l`
+FILE_SIZE=`du -sh $TEMP_DIR/ | awk '{print $1}'`
 
 #Write into the file number of temp files and there size
-echo "Number of temp files: $NUMBER_OF_FILES, size of temp files: $FILE_SIZE">$DEST_DIR$TODAY
+echo "Number of temp files: $NUMBER_OF_FILES, size of temp files: $FILE_SIZE">$DEST_DIR/$TODAY
 
 # Deleting temp files
-rm -rf $TEMP_DIR*
+rm -rf $TEMP_DIR/*
 
 # Start tomcat
 sudo systemctl start tomcat
